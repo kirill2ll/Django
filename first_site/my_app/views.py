@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.urls import reverse
 
 articles = {
     'sports': 'Sport Page',
@@ -28,4 +29,6 @@ def num_page_view(request, num_page):
     topics_list = list(articles.keys())
     topic = topics_list[num_page]
 
-    return HttpResponseRedirect(f"/my_app/{topic}")
+    webpage = reverse('topic',args=[topic])
+
+    return HttpResponseRedirect(webpage)
