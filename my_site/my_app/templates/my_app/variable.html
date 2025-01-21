@@ -6,7 +6,11 @@
 </head>
 <body>
     <h1>Variable html</h1>
-    <h2>First name: {{first_name}}</h2>
+    <h2>First name: {{first_name | upper}}</h2>
+    <h2>First name: {{first_name | length}}</h2>
+    <h2>First name: {{first_name | lower | capfirst}}</h2>
+
+    {% comment %} Filters https://docs.djangoproject.com/en/5.1/ref/templates/builtins/#built-in-filter-reference {% endcomment %}
     <h2>{{some_list.0}}</h2>
     <h2>{{some_dict.inside_key}}</h2>
 </body>
