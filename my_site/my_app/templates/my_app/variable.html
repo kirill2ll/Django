@@ -6,6 +6,13 @@
 </head>
 <body>
     <h1>Variable html</h1>
+    <ul>
+    {% for item in some_list %}
+        <li>{{item}}</li>
+    {% endfor %}
+    </ul>
+
+
     <h2>First name: {{first_name | upper}}</h2>
     <h2>First name: {{first_name | length}}</h2>
     <h2>First name: {{first_name | lower | capfirst}}</h2>
