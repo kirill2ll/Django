@@ -2,4 +2,15 @@ from django.contrib import admin
 from cars.models import Car
 # Register your models here.
 
-admin.site.register(Car)
+class CarAdmin(admin.ModelAdmin):
+    # order of the fields
+    # fields = ['year','brand']
+
+    # labels for the fields
+    fieldsets = (
+        ('Car Info', {
+            'fields': ('year', 'brand'),
+        }),
+    )
+
+admin.site.register(Car, CarAdmin)
