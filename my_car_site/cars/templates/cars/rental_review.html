@@ -18,13 +18,13 @@
             <!-- as_ul adds <li> -->
             {{form.as_p}}
             <!-- pass only specific fields -->
-            {{form.first_name.label_tag}} {{form.first_name}}
+            <!-- {{form.first_name.label_tag}} {{form.first_name}} -->
             <!-- for loop for the form -->
-            {% for field in form %}
+            <!-- {% for field in form %}
                 <div class="mb-3">
                     {{field.label_tag}} {{field}}
                 </div>
-            {% endfor %}
+            {% endfor %} -->
         <input type="submit" value="Submit">
         </form> 
     </div>

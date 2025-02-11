@@ -7,3 +7,11 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.brand} {self.year}"
+
+class Review(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    stars = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} {self.stars}"
