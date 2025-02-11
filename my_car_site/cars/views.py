@@ -36,7 +36,7 @@ def rental_review(request):
             return redirect(reverse('cars:thank_you'))
     else:
         form = ReviewForm()
-        return render(request, 'cars/rental_review.html', context={'form': form})
+    return render(request, 'cars/rental_review.html', context={'form': form})
 
 def thank_you(request):
     return render(request, 'cars/thank_you.html')
