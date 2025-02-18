@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView, CreateView
+from django.views.generic import TemplateView, FormView, CreateView, ListView
 from .forms import ContactForm
 from .models import Teacher
 
@@ -29,6 +29,12 @@ class ContactFormView(FormView):
     def form_valid(self, form):
         print(form.cleaned_data)
         return super().form_valid(form)
+
+class TeacherListView(ListView):
+    # it will look for 'classroom/teacher_list.html'
+    model = Teacher
+    context_object_name = 'teachers'  #default is 'object_list'
+    queryset = Teacher.objects.filter(subject='Box') #default is Teacher.objects.all() 
 
 
     
