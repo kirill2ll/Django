@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView, CreateView, ListView
+from django.views.generic import TemplateView, FormView, CreateView, ListView, DetailView
 from .forms import ContactForm
 from .models import Teacher
 
@@ -35,6 +35,10 @@ class TeacherListView(ListView):
     model = Teacher
     context_object_name = 'teachers'  #default is 'object_list'
     queryset = Teacher.objects.filter(subject='Box') #default is Teacher.objects.all() 
+
+class TeacherDetailView(DetailView):
+    model = Teacher
+    # look for 'classroom/teacher_detail.html'
 
 
     
