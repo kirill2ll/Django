@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, FormView, CreateView, ListView, DetailView, UpdateView
 from .forms import ContactForm
 from .models import Teacher
 
@@ -40,5 +40,10 @@ class TeacherDetailView(DetailView):
     model = Teacher
     # look for 'classroom/teacher_detail.html'
 
+class TeacherUpdateView(UpdateView):
+    model = Teacher
+    # shares the same template as CreateView
 
-    
+    # for custom template:
+    fields = ['last_name', 'subject']
+    success_url = reverse_lazy('classroom:thank_you')
