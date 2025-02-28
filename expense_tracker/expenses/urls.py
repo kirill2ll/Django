@@ -1,0 +1,8 @@
+from django.urls import path
+from . import views
+
+app_name = 'expenses' 
+
+urlpatterns = [
+    path('expenses/', views.home, name='expense_home'),
+]

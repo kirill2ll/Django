@@ -1,0 +1,7 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h1>Welcome to Expense Tracker</h1>
+<a href="{% url 'expenses:expense_home' %}" class="btn btn-primary">View Expenses</a>
+{% endblock %}
