@@ -5,4 +5,5 @@ app_name = 'core'  # Namespace for the core app
 
 urlpatterns = [
     path('', views.home, name='home'),  
+    path('signup/', views.signup, name='signup'),
 ]
