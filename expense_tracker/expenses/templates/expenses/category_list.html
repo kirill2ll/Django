@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Your Categories</h1>
+    <a href="{% url 'expenses:category_add' %}" class="btn btn-success mb-3">Add Category</a>
+    <a href="{% url 'expenses:expense_list' %}" class="btn btn-primary mb-3">View Expenses</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <a href="{% url 'expenses:category_update' category.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'expenses:category_delete' category.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
