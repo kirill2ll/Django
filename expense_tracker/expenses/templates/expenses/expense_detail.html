@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title text-center">Expense Details</h1>
+                </div>
+                <div class="card-body">
+                    <p><strong>Category:</strong> {{ expense.category }}</p>
+                    <p><strong>Amount:</strong> {{ expense.amount }}</p>
+                    <p><strong>Description:</strong> {{ expense.description }}</p>
+                    <p><strong>Date:</strong> {{ expense.date }}</p>
+                    <div class="text-center">
+                        <a href="{% url 'expenses:expense_update' expense.pk %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'expenses:expense_delete' expense.pk %}" class="btn btn-danger">Delete</a>
+                        <a href="{% url 'expenses:expense_list' %}" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
