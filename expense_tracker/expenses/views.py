@@ -30,9 +30,6 @@ class ExpenseCreateView(LoginRequiredMixin, CreateView):
         kwargs.update({'user': self.request.user})
         return kwargs
 
-    # def get_success_url(self):
-    #     return reverse('expenses:expense_list')
-
 class ExpenseUpdateView(LoginRequiredMixin, UpdateView):
     model = Expense
     form_class = ExpenseForm
@@ -44,13 +41,8 @@ class ExpenseUpdateView(LoginRequiredMixin, UpdateView):
         kwargs.update({'user': self.request.user})
         return kwargs
 
-    # def get_queryset(self):
-    #     return Expense.objects.filter(user=self.request.user)
     def get_queryset(self):
-        expenses = Expense.objects.filter(user=self.request.user)
-        for expense in expenses:
-            print(f"Expense ID: {expense.pk}, Amount: {expense.amount}, Category: {expense.category}")
-        return expenses
+        return Expense.objects.filter(user=self.request.user)
 
 class ExpenseDeleteView(LoginRequiredMixin, DeleteView):
     model = Expense
@@ -65,14 +57,8 @@ class ExpenseListView(LoginRequiredMixin, ListView):
     template_name = 'expenses/expense_list.html'
     context_object_name = 'expenses'
 
-    # def get_queryset(self):
-    #     return Expense.objects.filter(user=self.request.user)
-
     def get_queryset(self):
-        expenses = Expense.objects.filter(user=self.request.user)
-        for expense in expenses:
-            print(f"Expense ID: {expense.pk}, Amount: {expense.amount}, Category: {expense.category}")
-        return expenses
+        return Expense.objects.filter(user=self.request.user).order_by('-date')
 
 class ExpenseDetailView(LoginRequiredMixin, DetailView):
     model = Expense
