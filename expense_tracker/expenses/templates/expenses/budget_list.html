@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Your Budgets</h1>
+    <a href="{% url 'expenses:budget_add' %}" class="btn btn-success mb-3">Add Budget</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Month</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for budget in budgets %}
+                <tr>
+                    <td>{{ budget.category.name }}</td>
+                    <td>{{ budget.amount }}</td>
+                    <td>{{ budget.month|date:"F Y" }}</td>
+                    <td>
+                        <a href="{% url 'expenses:budget_update' budget.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'expenses:budget_delete' budget.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

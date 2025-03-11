@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
-from .models import Expense, Category
-from .forms import ExpenseForm, CategoryForm
+from .models import Expense, Category, Budget
+from .forms import ExpenseForm, CategoryForm, BudgetForm
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -112,3 +112,48 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Category.objects.filter(user=self.request.user)
+
+class BudgetCreateView(LoginRequiredMixin, CreateView):
+    model = Budget
+    form_class = BudgetForm
+    template_name = 'expenses/budget_form.html'
+    success_url = reverse_lazy('expenses:budget_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+class BudgetListView(LoginRequiredMixin, ListView):
+    model = Budget
+    template_name = 'expenses/budget_list.html'
+    context_object_name = 'budgets'
+
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)
+
+class BudgetUpdateView(LoginRequiredMixin, UpdateView):
+    model = Budget
+    form_class = BudgetForm
+    template_name = 'expenses/budget_form.html'
+    success_url = reverse_lazy('expenses:budget_list')
+
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+class BudgetDeleteView(LoginRequiredMixin, DeleteView):
+    model = Budget
+    template_name = 'expenses/budget_confirm_delete.html'
+    success_url = reverse_lazy('expenses:budget_list')
+
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)

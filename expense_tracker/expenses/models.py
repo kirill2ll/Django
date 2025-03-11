@@ -24,7 +24,7 @@ class Budget(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     # start_date = models.DateField()
     # end_date = models.DateField()
-    # month = models.DateField()
+    month = models.CharField(max_length=7)
 
     def __str__(self):
-        return f"{self.amount} from {self.start_date} to {self.end_date}"
+        return f"{self.amount} from {self.month}"
