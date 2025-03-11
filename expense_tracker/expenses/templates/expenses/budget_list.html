@@ -4,6 +4,8 @@
 <div class="container mt-5">
     <h1>Your Budgets</h1>
     <a href="{% url 'expenses:budget_add' %}" class="btn btn-success mb-3">Add Budget</a>
+    <a href="{% url 'expenses:category_list' %}" class="btn btn-primary mb-3">Categories</a>
+    <a href="{% url 'expenses:expense_list' %}" class="btn btn-primary mb-3">Expense</a>
     <table class="table">
         <thead>
             <tr>
