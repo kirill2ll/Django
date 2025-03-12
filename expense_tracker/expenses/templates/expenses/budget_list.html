@@ -20,7 +20,7 @@
                 <tr>
                     <td>{{ budget.category.name }}</td>
                     <td>{{ budget.amount }}</td>
-                    <td>{{ budget.month|date:"F Y" }}</td>
+                    <td>{{ budget.month }}</td>
                     <td>
                         <a href="{% url 'expenses:budget_update' budget.pk %}" class="btn btn-sm btn-warning">Edit</a>
                         <a href="{% url 'expenses:budget_delete' budget.pk %}" class="btn btn-sm btn-danger">Delete</a>
