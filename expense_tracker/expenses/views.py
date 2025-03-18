@@ -59,6 +59,21 @@ class ExpenseListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Expense.objects.filter(user=self.request.user).order_by('-date')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        expenses = context['expenses']
+        budgets = Budget.objects.filter(user=self.request.user)
+        
+        remaining_budget_per_category = {}
+        for budget in budgets:
+            remaining_budget_per_category[(budget.category.id, budget.month)] = budget.get_remaining_budget()
+
+        for expense in expenses:
+            month = expense.date.strftime('%Y-%m')
+            expense.remaining_budget = remaining_budget_per_category[(expense.category.id, month)]
+
+        return context
 
 class ExpenseDetailView(LoginRequiredMixin, DetailView):
     model = Expense

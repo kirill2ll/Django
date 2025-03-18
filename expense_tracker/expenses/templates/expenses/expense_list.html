@@ -13,6 +13,7 @@
                 <th>Amount</th>
                 <th>Description</th>
                 <th>Date</th>
+                <th>Remaining Budget</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -23,6 +24,13 @@
                     <td>{{ expense.amount }}</td>
                     <td>{{ expense.description }}</td>
                     <td>{{ expense.date }}</td>
+                    <td>
+                        {% if expense.remaining_budget is not None %}
+                            {{ expense.remaining_budget }}
+                        {% else %}
+                            No Budget Set
+                        {% endif %}
+                    </td>
                     <td>
                         <a href="{% url 'expenses:expense_detail' expense.pk %}" class="btn btn-sm btn-info">More Info</a>
                         <a href="{% url 'expenses:expense_update' expense.pk %}" class="btn btn-sm btn-warning">Edit</a>
