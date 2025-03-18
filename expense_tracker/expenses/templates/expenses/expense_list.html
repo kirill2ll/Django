@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             {% for expense in expenses %}
-                <tr>
+            <tr class="{% if expense.remaining_budget < 0 %}table-danger{% endif %}">
                     <td>{{ expense.category }}</td>
                     <td>{{ expense.amount }}</td>
                     <td>{{ expense.description }}</td>
