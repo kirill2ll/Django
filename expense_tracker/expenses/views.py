@@ -136,6 +136,15 @@ class BudgetListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Budget.objects.filter(user=self.request.user)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        budgets = context['budgets']
+        
+        for budget in budgets:
+            budget.remaining_budget = budget.get_remaining_budget()
+        
+        return context
+
 class BudgetUpdateView(LoginRequiredMixin, UpdateView):
     model = Budget
     form_class = BudgetForm

@@ -11,6 +11,7 @@
             <tr>
                 <th>Category</th>
                 <th>Amount</th>
+                <th>Remaining Amount</th>
                 <th>Month</th>
                 <th>Actions</th>
             </tr>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ budget.category.name }}</td>
                     <td>{{ budget.amount }}</td>
+                    <td>{{ budget.remaining_budget }}</td>
                     <td>{{ budget.month }}</td>
                     <td>
                         <a href="{% url 'expenses:budget_update' budget.pk %}" class="btn btn-sm btn-warning">Edit</a>

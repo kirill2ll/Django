@@ -1,5 +1,7 @@
 from django.db import models
+from django.db.models import Sum
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -28,3 +30,16 @@ class Budget(models.Model):
 
     def __str__(self):
         return f"{self.amount} from {self.month}"
+
+    def get_remaining_budget(self):
+        year, month = map(int, self.month.split('-'))
+
+        total_expenses = Expense.objects.filter(
+            user=self.user,
+            category=self.category,
+            date__year=year,
+            date__month=month).aggregate(total=Sum('amount'))['total'] or 0
+
+        remaining_budget = self.amount - total_expenses
+
+        return remaining_budget
