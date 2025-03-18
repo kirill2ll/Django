@@ -64,14 +64,14 @@ class ExpenseListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         expenses = context['expenses']
         budgets = Budget.objects.filter(user=self.request.user)
-        
+
         remaining_budget_per_category = {}
         for budget in budgets:
             remaining_budget_per_category[(budget.category.id, budget.month)] = budget.get_remaining_budget()
 
         for expense in expenses:
             month = expense.date.strftime('%Y-%m')
-            expense.remaining_budget = remaining_budget_per_category[(expense.category.id, month)]
+            expense.remaining_budget = remaining_budget_per_category.get((expense.category.id, month), None)
 
         return context
 

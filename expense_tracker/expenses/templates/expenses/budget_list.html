@@ -21,7 +21,13 @@
             <tr class="{% if budget.remaining_budget < 0 %}table-danger{% endif %}">
                     <td>{{ budget.category.name }}</td>
                     <td>{{ budget.amount }}</td>
-                    <td>{{ budget.remaining_budget }}</td>
+                    <td>
+                        {% if expense.remaining_budget is not None %}
+                            {{ expense.remaining_budget }}
+                        {% else %}
+                            <span class="text-muted">No Budget</span>
+                        {% endif %}
+                    </td>
                     <td>{{ budget.month }}</td>
                     <td>
                         <a href="{% url 'expenses:budget_update' budget.pk %}" class="btn btn-sm btn-warning">Edit</a>
