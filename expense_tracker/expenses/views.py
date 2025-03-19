@@ -3,9 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from .models import Expense, Category, Budget
 from .forms import ExpenseForm, CategoryForm, BudgetForm
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import datetime
+from django.db.models import Sum
+import json
 
 
 @login_required
@@ -181,3 +184,26 @@ class BudgetDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Budget.objects.filter(user=self.request.user)
+    
+class DashboardView(TemplateView):
+    template_name = 'expenses/dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        current_month = datetime.now().strftime('%Y-%m')
+
+        category_expenses = Expense.objects.filter(
+            user=self.request.user, 
+            date__month=current_month.split('-')[1], 
+            date__year=current_month.split('-')[0]
+        ).values('category__name').annotate(total=Sum('amount'))
+
+        expenses_data = [
+            {'category__name': expense['category__name'], 'total': float(expense['total'])}
+            for expense in category_expenses
+        ]
+
+        context['expenses_data'] = json.dumps(expenses_data)
+
+        return context
