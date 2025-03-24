@@ -2,15 +2,25 @@
 
 {% block content %}
   <div class="container">
-    <h2>Dashboard: Expenses by Category</h2>
+    <h2>Dashboard</h2>
 
-    <div class="chart-container" style="width: 60%; margin: auto;">
-      <canvas id="expensesChart"></canvas>
+    <div class="charts-row" style="display: flex; justify-content: space-between; gap: 30px;">
+
+        <div class="chart-container" style="width: 60%; margin: auto;">
+        <canvas id="expensesChart"></canvas>
+        </div>
+
+        <div class="chart-container" style="width: 60%; margin: auto;">
+            <canvas id="monthlyTrendChart"></canvas>
+        </div>
+
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+
+    // Expenses by Category
     const expensesData = JSON.parse('{{ expenses_data | safe }}');
 
     const labels = expensesData.map(expense => expense.category__name);
@@ -49,6 +59,37 @@
           }
         }
       }
+    });
+
+    // Monthly Expenses Trend Chart
+    const monthlyExpenses = JSON.parse('{{ monthly_spending | safe }}');
+
+    const monthlyTrendChartData = {
+    labels: monthlyExpenses.map(item => item.month), 
+    datasets: [{
+        label: 'Total Expenses',
+        data: monthlyExpenses.map(item => item.total),
+        borderColor: '#FF5733',
+        fill: false,
+    }]
+    };
+
+    new Chart(document.getElementById('monthlyTrendChart'), {
+    type: 'line',
+    data: monthlyTrendChartData,
+    options: {
+        responsive: true,
+        plugins: {
+        legend: {
+            display: true,
+            position: 'top',
+        },
+        title: {
+            display: true,
+            text: 'Monthly Expenses Trend'
+        }
+        },
+    },
     });
   </script>
 {% endblock %}

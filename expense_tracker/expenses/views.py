@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import datetime
 from django.db.models import Sum
 import json
+import calendar
 
 
 @login_required
@@ -193,6 +194,7 @@ class DashboardView(TemplateView):
 
         current_month = datetime.now().strftime('%Y-%m')
 
+        # Dashboard Expensess by Category
         category_expenses = Expense.objects.filter(
             user=self.request.user, 
             date__month=current_month.split('-')[1], 
@@ -205,5 +207,15 @@ class DashboardView(TemplateView):
         ]
 
         context['expenses_data'] = json.dumps(expenses_data)
+
+        # Dashboard Monthly Spending Trend
+        monthly_spending = Expense.objects.filter(
+            user=self.request.user).values('date__month').annotate(total=Sum('amount')).order_by('date__month')
+
+        monthly_spending_data = [
+            {'month': calendar.month_name[entry['date__month']], 'total': float(entry['total'])}
+            for entry in monthly_spending
+        ]
+        context['monthly_spending'] = json.dumps(monthly_spending_data)
 
         return context
