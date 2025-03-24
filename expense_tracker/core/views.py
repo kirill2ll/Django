@@ -4,8 +4,13 @@ from django.contrib.auth import login, authenticate
 from expenses.models import Expense, Budget
 from django.db.models import Sum
 from datetime import datetime
+from django.contrib.auth.models import AnonymousUser
+
 
 def home(request):
+    if isinstance(request.user, AnonymousUser):
+        return redirect('login')
+
     current_month = datetime.now().strftime('%Y-%m')
 
     total_expenses = Expense.objects.filter(
